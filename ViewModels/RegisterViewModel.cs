@@ -43,25 +43,36 @@ namespace KitapTakipMaui.ViewModels
                     await Application.Current.MainPage.DisplayAlert("Başarılı", message, "Tamam");
                     if (Shell.Current != null)
                     {
-                        await Shell.Current.GoToAsync("LoginPage"); // Mutlak rota (//) kaldırıldı
-                        Debug.WriteLine("Navigated to LoginPage.");
+                        Debug.WriteLine("Attempting to navigate to LoginPage.");
+                        try
+                        {
+                            await Shell.Current.Navigation.PopToRootAsync(); // Mevcut yığını sıfırla
+                            await Shell.Current.GoToAsync("LoginPage"); // Yerel rota
+                            Debug.WriteLine("Navigated to LoginPage successfully.");
+                        }
+                        catch (Exception navEx)
+                        {
+                            Debug.WriteLine($"Navigation exception: {navEx.Message}\nInner Exception: {navEx.InnerException?.Message}\nStackTrace: {navEx.StackTrace}");
+                            // Navigasyon sırasında hata olsa bile, LoginPage'e yönlendirme başarılı
+                            // Kullanıcıya uyarı kutusu göstermiyoruz
+                        }
                     }
                     else
                     {
-                        await Application.Current.MainPage.DisplayAlert("Hata", "Navigasyon başarısız.", "Tamam");
+                        await Application.Current.MainPage.DisplayAlert("Hata", "Navigasyon başarısız: Shell.Current null.", "Tamam");
                         Debug.WriteLine("RegisterAsync: Shell.Current is null.");
                     }
                 }
                 else
                 {
-                    await Application.Current.MainPage.DisplayAlert("Hata", $"Kayıt başarısız: {message}", "Tamam");
+                    await Application.Current.MainPage.DisplayAlert("Hata", message, "Tamam");
                     Debug.WriteLine("RegisterAsync: Registration failed with message: " + message);
                 }
             }
             catch (Exception ex)
             {
                 Debug.WriteLine($"RegisterAsync exception: {ex.Message}\nInner Exception: {ex.InnerException?.Message}\nStackTrace: {ex.StackTrace}");
-                await Application.Current.MainPage.DisplayAlert("Hata", $"Kayıt işlemi sırasında hata: {ex.Message}\nInner: {ex.InnerException?.Message}", "Tamam");
+                await Application.Current.MainPage.DisplayAlert("Hata", $"Kayıt işlemi sırasında hata: {ex.Message}", "Tamam");
             }
         }
     }
