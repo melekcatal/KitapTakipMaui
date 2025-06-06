@@ -35,15 +35,15 @@ namespace KitapTakipMaui.ViewModels
 
             try
             {
-                Debug.WriteLine($"RegisterModel: {RegisterModel.Username}, {RegisterModel.Email}");
+                Debug.WriteLine($"RegisterModel: Username={RegisterModel.Username}, Email={RegisterModel.Email}, Password={RegisterModel.Password}");
                 var (success, message) = await _authService.RegisterAsync(RegisterModel);
-                Debug.WriteLine($"RegisterAsync result: Success={success}, Message={message}");
+                Debug.WriteLine($"RegisterAsync result from AuthService: Success={success}, Message={message}");
                 if (success)
                 {
                     await Application.Current.MainPage.DisplayAlert("Başarılı", message, "Tamam");
                     if (Shell.Current != null)
                     {
-                        await Shell.Current.GoToAsync($"//LoginPage");
+                        await Shell.Current.GoToAsync("LoginPage"); // Mutlak rota (//) kaldırıldı
                         Debug.WriteLine("Navigated to LoginPage.");
                     }
                     else
@@ -54,14 +54,14 @@ namespace KitapTakipMaui.ViewModels
                 }
                 else
                 {
-                    await Application.Current.MainPage.DisplayAlert("Hata", message, "Tamam");
-                    Debug.WriteLine("RegisterAsync: Registration failed.");
+                    await Application.Current.MainPage.DisplayAlert("Hata", $"Kayıt başarısız: {message}", "Tamam");
+                    Debug.WriteLine("RegisterAsync: Registration failed with message: " + message);
                 }
             }
             catch (Exception ex)
             {
-                await Application.Current.MainPage.DisplayAlert("Hata", $"Kayıt işlemi sırasında hata: {ex.Message}", "Tamam");
-                Debug.WriteLine($"RegisterAsync exception: {ex.Message}\n{ex.StackTrace}");
+                Debug.WriteLine($"RegisterAsync exception: {ex.Message}\nInner Exception: {ex.InnerException?.Message}\nStackTrace: {ex.StackTrace}");
+                await Application.Current.MainPage.DisplayAlert("Hata", $"Kayıt işlemi sırasında hata: {ex.Message}\nInner: {ex.InnerException?.Message}", "Tamam");
             }
         }
     }

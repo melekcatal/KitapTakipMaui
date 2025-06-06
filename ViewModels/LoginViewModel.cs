@@ -36,7 +36,7 @@ namespace KitapTakipMaui.ViewModels
             {
                 Debug.WriteLine($"LoginModel: {LoginModel.Username}, {LoginModel.Password}");
                 var (success, message, token) = await _authService.LoginAsync(LoginModel);
-                Debug.WriteLine($"LoginAsync result: Success={success}, Message={message}, Token={token}");
+                Debug.WriteLine($"LoginAsync result from AuthService: Success={success}, Message={message}, Token={token?.Substring(0, Math.Min(10, token?.Length ?? 0))}...");
                 if (success)
                 {
                     if (Shell.Current == null)
@@ -47,19 +47,19 @@ namespace KitapTakipMaui.ViewModels
                     }
                     // Token'ı saklamak için (isteğe bağlı)
                     // await SecureStorage.SetAsync("auth_token", token);
-                    await Shell.Current.GoToAsync($"//BookListPage");
+                    await Shell.Current.GoToAsync("BookListPage");
                     Debug.WriteLine("Navigated to BookListPage.");
                 }
                 else
                 {
                     await Application.Current.MainPage.DisplayAlert("Hata", message, "Tamam");
-                    Debug.WriteLine("LoginAsync: Login failed.");
+                    Debug.WriteLine("LoginAsync: Login failed with message: " + message);
                 }
             }
             catch (Exception ex)
             {
-                await Application.Current.MainPage.DisplayAlert("Hata", $"Giriş işlemi sırasında hata: {ex.Message}", "Tamam");
-                Debug.WriteLine($"LoginAsync exception: {ex.Message}\n{ex.StackTrace}");
+                Debug.WriteLine($"LoginAsync exception: {ex.Message}\nInner Exception: {ex.InnerException?.Message}\nStackTrace: {ex.StackTrace}");
+                await Application.Current.MainPage.DisplayAlert("Hata", $"Giriş işlemi sırasında hata: {ex.Message}\nInner: {ex.InnerException?.Message}", "Tamam");
             }
         }
 
