@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="KitapTakipMaui.Views.AddBookPage"
+             Title="Kitap Ekle">
+    <VerticalStackLayout Padding="20" Spacing="10">
+        <Label Text="Başlık" />
+        <Entry Text="{Binding Book.Title}" />
+        <Label Text="Yazar" />
+        <Entry Text="{Binding Book.Author}" />
+        <Label Text="Tür" />
+        <Picker SelectedItem="{Binding Book.Genre}">
+            <Picker.ItemsSource>
+                <x:Array Type="{x:Type x:String}">
+                    <x:String>Roman</x:String>
+                    <x:String>Bilim Kurgu</x:String>
+                    <x:String>Fantastik</x:String>
+                    <x:String>Polisiye</x:String>
+                </x:Array>
+            </Picker.ItemsSource>
+        </Picker>
+        <Label Text="Başlangıç Tarihi" />
+        <DatePicker Date="{Binding Book.StartDate}" />
+        <Label Text="Bitiş Tarihi" />
+        <DatePicker Date="{Binding Book.EndDate}" IsEnabled="{Binding Book.EndDate, Converter={StaticResource NullToBooleanConverter}}" />
+        <CheckBox IsChecked="{Binding Book.EndDate, Converter={StaticResource NullToBooleanConverter}}" />
+        <Label Text="Notlar" />
+        <Editor Text="{Binding Book.Notes}" />
+        <Label Text="Açıklama" />
+        <Editor Text="{Binding Book.Description}" />
+        <Label Text="Sayfa Sayısı" />
+        <Entry Text="{Binding Book.PageCount}" Keyboard="Numeric" />
+        <Button Text="Ekle" Command="{Binding AddBookCommand}" />
+    </VerticalStackLayout>
+</ContentPage>

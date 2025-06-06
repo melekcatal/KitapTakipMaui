@@ -1,0 +1,15 @@
+# Build sonuçlarý
+bin/
+obj/
+
+# User ayarlarý
+*.user
+*.suo
+
+# VS config
+.vs/
+.vscode/
+
+# Diðer
+*.userosscache
+*.sln.docstates

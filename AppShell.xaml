@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="KitapTakipMaui.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:KitapTakipMaui.Views"
+    Shell.NavBarIsVisible="True">
+
+    <!-- Başlangıç sayfası olarak LoginPage'i ayarla -->
+    <ShellContent
+        Title="Giriş"
+        ContentTemplate="{DataTemplate views:LoginPage}"
+        Route="LoginPage"
+        IsVisible="True" />
+
+    <!-- Diğer sayfalar -->
+    <ShellContent
+        Title="Kayıt Ol"
+        ContentTemplate="{DataTemplate views:RegisterPage}"
+        Route="RegisterPage"
+        IsVisible="False" />
+
+    <ShellContent
+        Title="Kitap Listesi"
+        ContentTemplate="{DataTemplate views:BookListPage}"
+        Route="BookListPage"
+        IsVisible="False" />
+
+    <ShellContent
+        Title="Kitap Detayı"
+        ContentTemplate="{DataTemplate views:BookDetailPage}"
+        Route="BookDetailPage"
+        IsVisible="False" />
+
+    <ShellContent
+        Title="Kitap Ekle"
+        ContentTemplate="{DataTemplate views:AddBookPage}"
+        Route="AddBookPage"
+        IsVisible="False" />
+
+    <ShellContent
+        Title="Kitap Düzenle"
+        ContentTemplate="{DataTemplate views:EditBookPage}"
+        Route="EditBookPage"
+        IsVisible="False" />
+
+</Shell>

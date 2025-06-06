@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="KitapTakipMaui.Views.RegisterPage"
+             Title="Kayıt Ol">
+    <VerticalStackLayout Padding="20" Spacing="10">
+        <Label Text="Kullanıcı Adı" />
+        <Entry Text="{Binding RegisterModel.Username}" />
+        <Label Text="E-posta" />
+        <Entry Text="{Binding RegisterModel.Email}" Keyboard="Email" />
+        <Label Text="Şifre" />
+        <Entry Text="{Binding RegisterModel.Password}" IsPassword="True" />
+        <Button Text="Kayıt Ol" Command="{Binding RegisterCommand}" />
+    </VerticalStackLayout>
+</ContentPage>
